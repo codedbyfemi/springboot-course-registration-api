@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class RegistrationServiceImpl implements IRegistrationService {
@@ -56,16 +57,56 @@ public class RegistrationServiceImpl implements IRegistrationService {
 
     @Override
     public List<RegistrationDTO> getAllRegistrations() {
-        return List.of();
+        List<Registration> registrations = registrationRepo.findAll();
+        return toDTOList(registrations);
     }
 
     @Override
     public List<CourseDTO> getCoursesByStudentId(Long studentId) {
-        return List.of();
+        Student student = studentRepo.findById(studentId).orElseThrow(() -> new RuntimeException("Student not found"));
+        List<Registration> registrations = registrationRepo.findByStudent(student);
+
+        return registrations.stream()
+                .map(reg -> new CourseDTO(
+                        reg.getCourse().getId(),
+                        reg.getCourse().getTitle(),
+                        reg.getCourse().getCode(),
+                        reg.getCourse().getUnit()
+                ))
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<StudentDTO> getStudentsByCourseId(Long courseId) {
-        return List.of();
+        Course course = courseRepo.findById(courseId)
+                .orElseThrow(() -> new RuntimeException("Course not found"));
+
+        List<Registration> registrations = registrationRepo.findByCourse(course);
+
+        return registrations.stream()
+                .map(reg -> new StudentDTO(
+                        reg.getStudent().getId(),
+                        reg.getStudent().getName(),
+                        reg.getStudent().getMatricNo()
+                ))
+                .collect(Collectors.toList());
+    }
+
+    public RegistrationDTO toDTO(Registration registration) {
+        return new RegistrationDTO(
+                registration.getId(),
+                registration.getStudent().getMatricNo(),
+                registration.getStudent().getName(),
+                registration.getCourse().getTitle(),
+                registration.getCourse().getCode(),
+                registration.getCourse().getUnit()
+        );
+    }
+
+    public List<RegistrationDTO> toDTOList(List<Registration> registrationList) {
+        return registrationList.stream()
+                .map(this::toDTO)
+                .collect(Collectors.toList());
+
     }
 }
