@@ -28,11 +28,11 @@ public class RegistrationServiceImpl implements IRegistrationService {
     private StudentRepo studentRepo;
 
     @Override
-    public RegistrationDTO registerStudentToCourse(Long studentId, Long courseId) {
-        Student student = studentRepo.findById(studentId).
+    public RegistrationDTO registerStudentToCourse(String studentMatriculationNumber, String courseCode) {
+        Student student = studentRepo.findByMatricNo(studentMatriculationNumber).
                 orElseThrow(() -> new RuntimeException("Student not found"));
 
-        Course course = courseRepo.findById(courseId)
+        Course course = courseRepo.findByCode(courseCode)
                 .orElseThrow(() -> new RuntimeException("Course not found"));
 
         Optional<Registration> existing = registrationRepo.findByStudentAndCourse(student, course);
@@ -62,8 +62,8 @@ public class RegistrationServiceImpl implements IRegistrationService {
     }
 
     @Override
-    public List<CourseDTO> getCoursesByStudentId(Long studentId) {
-        Student student = studentRepo.findById(studentId).orElseThrow(() -> new RuntimeException("Student not found"));
+    public List<CourseDTO> getCoursesByStudentMatriculationNumber(String studentMatriculationNumber) {
+        Student student = studentRepo.findByMatricNo(studentMatriculationNumber).orElseThrow(() -> new RuntimeException("Student not found"));
         List<Registration> registrations = registrationRepo.findByStudent(student);
 
         return registrations.stream()
@@ -77,8 +77,8 @@ public class RegistrationServiceImpl implements IRegistrationService {
     }
 
     @Override
-    public List<StudentDTO> getStudentsByCourseId(Long courseId) {
-        Course course = courseRepo.findById(courseId)
+    public List<StudentDTO> getStudentsByCourseCode(String courseCode) {
+        Course course = courseRepo.findByCode(courseCode)
                 .orElseThrow(() -> new RuntimeException("Course not found"));
 
         List<Registration> registrations = registrationRepo.findByCourse(course);

@@ -7,8 +7,8 @@ import com.example.springbootcourseregistrationapi.dto.StudentDTO;
 import java.util.List;
 
 public interface IRegistrationService {
-    RegistrationDTO registerStudentToCourse(Long studentId, Long courseId);
+    RegistrationDTO registerStudentToCourse(String studentMatriculationNumber, String courseCode);
     List<RegistrationDTO> getAllRegistrations();
-    List<CourseDTO> getCoursesByStudentId(Long studentId);
-    List<StudentDTO> getStudentsByCourseId(Long courseId);
+    List<CourseDTO> getCoursesByStudentMatriculationNumber(String studentMatriculationNumber);
+    List<StudentDTO> getStudentsByCourseCode(String courseCode);
 }

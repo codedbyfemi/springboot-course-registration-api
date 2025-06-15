@@ -4,6 +4,7 @@ import com.example.springbootcourseregistrationapi.dto.CourseDTO;
 import com.example.springbootcourseregistrationapi.iService.ICourseService;
 import com.example.springbootcourseregistrationapi.models.Course;
 import com.example.springbootcourseregistrationapi.repositories.CourseRepo;
+import jakarta.persistence.EntityExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,12 @@ public class CourseServiceImpl implements ICourseService {
 
     @Override
     public Course createCourse(CourseDTO courseDTO) {
+        Course byCode = courseRepo.findByCode(courseDTO.getCode()).orElse(null);
+        Course byTitle = courseRepo.findByTitle(courseDTO.getTitle()).orElse(null);
+        if (byCode != null || byTitle != null) {
+            throw new EntityExistsException("Course already exists");
+        }
+
         Course course = new Course();
         course.setCode(courseDTO.getCode());
         course.setTitle(courseDTO.getTitle());

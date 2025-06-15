@@ -20,6 +20,7 @@ public class Student {
 
     private String name;
 
+    @Column(unique = true)
     private String matricNo;
 
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)

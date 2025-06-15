@@ -18,8 +18,8 @@ public class RegistrationController {
     private IRegistrationService registrationService;
 
     @PostMapping
-    public ResponseEntity<RegistrationDTO> register(@RequestParam Long studentId, @RequestParam Long courseId){
-        return  ResponseEntity.ok(registrationService.registerStudentToCourse(studentId, courseId));
+    public ResponseEntity<RegistrationDTO> register(@RequestParam String studentMatriculationNumber, @RequestParam String courseCode){
+        return  ResponseEntity.ok(registrationService.registerStudentToCourse(studentMatriculationNumber, courseCode));
     }
 
     @GetMapping("/all")
@@ -28,15 +28,15 @@ public class RegistrationController {
         return ResponseEntity.ok(registrationDTOs);
     }
 
-    @GetMapping("/student/{studentId}/courses")
-    public ResponseEntity<List<CourseDTO>> getCoursesByStudent(@PathVariable Long studentId) {
-        List<CourseDTO> courses = registrationService.getCoursesByStudentId(studentId);
+    @GetMapping("/student/courses")
+    public ResponseEntity<List<CourseDTO>> getCoursesByStudent(@RequestParam String studentMatriculationNumber) {
+        List<CourseDTO> courses = registrationService.getCoursesByStudentMatriculationNumber(studentMatriculationNumber);
         return ResponseEntity.ok(courses);
     }
 
-    @GetMapping("/course/{courseId}/students")
-    public ResponseEntity<List<StudentDTO>> getStudentsByCourse(@PathVariable Long courseId) {
-        List<StudentDTO> students = registrationService.getStudentsByCourseId(courseId);
+    @GetMapping("/course/students")
+    public ResponseEntity<List<StudentDTO>> getStudentsByCourse(@RequestParam String courseCode) {
+        List<StudentDTO> students = registrationService.getStudentsByCourseCode(courseCode);
         return ResponseEntity.ok(students);
     }
 }
