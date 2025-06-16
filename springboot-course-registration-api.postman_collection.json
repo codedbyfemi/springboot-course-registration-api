@@ -1,0 +1,166 @@
+{
+	"info": {
+		"_postman_id": "d834973f-c9d0-4211-876b-27d84f06e16c",
+		"name": "springboot-course-registration-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "43827190",
+		"_collection_link": "https://oluwafemi-5432915.postman.co/workspace/Oluwafemi's-Workspace~885d797d-2b78-4870-8bc2-24833884e5e0/collection/43827190-d834973f-c9d0-4211-876b-27d84f06e16c?action=share&source=collection_link&creator=43827190"
+	},
+	"item": [
+		{
+			"name": "create student",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Olatunji Oluwafemi\",\n    \"matricNo\": \"matric\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:8080/api/v1/student"
+			},
+			"response": []
+		},
+		{
+			"name": "create course",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"code\": \"cosc326\",\n    \"title\": \"Informatiom Systems Analysis And Design\",\n    \"unit\": 3\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:8080/api/v1/course"
+			},
+			"response": []
+		},
+		{
+			"name": "register course",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "studentMatriculationNumber",
+							"value": "matric",
+							"type": "text"
+						},
+						{
+							"key": "courseCode",
+							"value": "cosc326",
+							"type": "text"
+						}
+					]
+				},
+				"url": "localhost:8080/api/v1/register"
+			},
+			"response": []
+		},
+		{
+			"name": "get all students",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "localhost:8080/api/v1/student"
+			},
+			"response": []
+		},
+		{
+			"name": "get all registrations",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "localhost:8080/api/v1/register/all"
+			},
+			"response": []
+		},
+		{
+			"name": "get courses by student",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "studentMatriculationNumber",
+							"value": "matric",
+							"type": "text"
+						}
+					]
+				},
+				"url": "localhost:8080/api/v1/register/student/courses"
+			},
+			"response": []
+		},
+		{
+			"name": "get student by course",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "courseCode",
+							"value": "cosc326",
+							"type": "text"
+						}
+					]
+				},
+				"url": "localhost:8080/api/v1/register/course/students"
+			},
+			"response": []
+		},
+		{
+			"name": "get all courses",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "localhost:8080/api/v1/course"
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "studentMatriculationNumber",
+							"value": "matric",
+							"type": "text"
+						},
+						{
+							"key": "courseCode",
+							"value": "cosc326",
+							"type": "text"
+						}
+					]
+				},
+				"url": "localhost:8080/api/v1/register/unregister"
+			},
+			"response": []
+		}
+	]
+}
