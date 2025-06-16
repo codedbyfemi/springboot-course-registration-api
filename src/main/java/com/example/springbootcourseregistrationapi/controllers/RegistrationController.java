@@ -39,4 +39,14 @@ public class RegistrationController {
         List<StudentDTO> students = registrationService.getStudentsByCourseCode(courseCode);
         return ResponseEntity.ok(students);
     }
+
+    @DeleteMapping("/unregister")
+    public ResponseEntity<String> unregisterStudentFromCourse(
+            @RequestParam String studentMatriculationNumber,
+            @RequestParam String courseCode
+    ) {
+        registrationService.unRegisterStudentFromCourse(studentMatriculationNumber, courseCode);
+        return ResponseEntity.ok("Student unregistered from course");
+    }
+
 }

@@ -92,6 +92,20 @@ public class RegistrationServiceImpl implements IRegistrationService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public void unRegisterStudentFromCourse(String studentMatriculationNumber, String courseCode) {
+        Student student = studentRepo.findByMatricNo(studentMatriculationNumber)
+                .orElseThrow(() -> new RuntimeException("Student not found"));
+
+        Course course = courseRepo.findByCode(courseCode)
+                .orElseThrow(() -> new RuntimeException("Course not found"));
+
+        Registration reg = registrationRepo.findByStudentAndCourse(student, course)
+                .orElseThrow(() -> new RuntimeException("Registration not found"));
+
+        registrationRepo.delete(reg);
+    }
+
     public RegistrationDTO toDTO(Registration registration) {
         return new RegistrationDTO(
                 registration.getId(),

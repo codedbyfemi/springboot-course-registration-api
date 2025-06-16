@@ -11,4 +11,6 @@ public interface IRegistrationService {
     List<RegistrationDTO> getAllRegistrations();
     List<CourseDTO> getCoursesByStudentMatriculationNumber(String studentMatriculationNumber);
     List<StudentDTO> getStudentsByCourseCode(String courseCode);
+
+    void unRegisterStudentFromCourse(String studentMatriculationNumber, String courseCode);
 }
